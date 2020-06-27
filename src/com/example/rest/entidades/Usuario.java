@@ -9,9 +9,6 @@ public class Usuario {
 	private String login;
 	private String password;
 	
-	public String getNombreCompleto() {
-		return nombre.concat(" ").concat(apellido);
-	}
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -48,8 +45,6 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
 	
 
 }

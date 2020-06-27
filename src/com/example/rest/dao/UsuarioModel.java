@@ -43,9 +43,12 @@ public class UsuarioModel {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (rs != null)	  rs.close();
-				if (pstm != null) pstm.close();
-				if (conn != null) conn.close();
+				if (rs != null)
+					rs.close();
+				if (pstm != null)
+					pstm.close();
+				if (conn != null)
+					conn.close();
 			} catch (Exception e2) {
 			}
 		}
@@ -56,7 +59,7 @@ public class UsuarioModel {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		
+
 		List<Usuario> lista = new ArrayList<Usuario>();
 		try {
 			String sql = "select * from usuario";
@@ -79,12 +82,110 @@ public class UsuarioModel {
 			log.info(e);
 		} finally {
 			try {
-				if (rs != null)rs.close();
-				if (pstm != null)pstm.close();
-				if (conn != null)conn.close();
-			} catch (SQLException e) {}
+				if (rs != null)
+					rs.close();
+				if (pstm != null)
+					pstm.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+			}
 		}
 		return lista;
+	}
+
+	public int insertaUsuario(Usuario obj) {
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		int salida = -1;
+		try {
+			String sql = "insert into usuario values(null,?,?,?,?,?)";
+			conn = MySqlDBConexion.getConexion();
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, obj.getNombre());
+			pstm.setString(2, (obj.getApellido()));
+			pstm.setString(3, obj.getDni());
+			pstm.setString(4, (obj.getLogin()));
+			pstm.setString(5, obj.getPassword());
+			log.info(pstm);
+			salida = pstm.executeUpdate();
+		} catch (Exception e) {
+			log.info(e);
+		} finally {
+			try {
+				if (pstm != null)
+					pstm.close();
+			} catch (SQLException e1) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return salida;
+	}
+
+	public int actualizaUsuario(Usuario obj) {
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		int salida = -1;
+		try {
+			String sql = "update usuario set nombre =?, apellido =?, dni= ?, login = ?, password = ? where idusuario =? ";
+			conn = MySqlDBConexion.getConexion();
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, obj.getNombre());
+			pstm.setString(2, (obj.getApellido()));
+			pstm.setString(3, obj.getDni());
+			pstm.setString(4, (obj.getLogin()));
+			pstm.setString(5, obj.getPassword());
+			pstm.setInt(6, obj.getIdUsuario());
+			log.info(pstm);
+
+			salida = pstm.executeUpdate();
+		} catch (Exception e) {
+			log.info(e);
+		} finally {
+			try {
+				if (pstm != null)
+					pstm.close();
+			} catch (SQLException e1) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return salida;
+	}
+
+	public int eliminaUsuario(int obj) {
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		int salida = -1;
+		try {
+			String sql = "delete from usuario where idusuario =?";
+			conn = MySqlDBConexion.getConexion();
+			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, obj);
+			log.info(pstm);
+			salida = pstm.executeUpdate();
+		} catch (Exception e) {
+			log.info(e);
+		} finally {
+			try {
+				if (pstm != null)
+					pstm.close();
+			} catch (SQLException e1) {
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return salida;
 	}
 
 }
