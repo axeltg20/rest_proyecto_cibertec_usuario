@@ -25,13 +25,6 @@ public class ServicioRest {
 	private UsuarioModel daoUser = new UsuarioModel();
 
 	@GET
-	@Path("/login")
-	public Response login(Usuario obj) {
-		log.info("login rest ");
-		return Response.ok(daoUser.login(obj)).build();
-	}
-
-	@GET
 	@Path("/usuario")
 	public Response listarTodos() {
 		log.info("listarTodos rest ");
