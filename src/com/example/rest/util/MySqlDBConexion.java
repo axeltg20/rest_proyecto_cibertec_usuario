@@ -20,8 +20,9 @@ public class MySqlDBConexion {
 	public static Connection getConexion() {
 		Connection salida = null;
 		try {
-			salida = DriverManager.getConnection(rb.getString("url"), rb.getString("username"),
-					rb.getString("password"));
+			/*salida = DriverManager.getConnection(rb.getString("url"), rb.getString("username"),
+					rb.getString("password"));*/
+			salida = DriverManager.getConnection("jdbc:mysql://node226601-env-4264098.j.layershift.co.uk/sistema_delivery_simple?serverTimezone=UTC","root","AGTfbv33381");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
