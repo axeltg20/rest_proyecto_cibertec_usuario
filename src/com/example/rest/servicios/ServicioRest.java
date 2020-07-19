@@ -14,7 +14,9 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.example.rest.dao.ComprobanteModel;
 import com.example.rest.dao.UsuarioModel;
+import com.example.rest.entidades.Comprobante;
 import com.example.rest.entidades.Usuario;
 
 @Path("/servicios")
@@ -23,6 +25,7 @@ import com.example.rest.entidades.Usuario;
 public class ServicioRest {
 	private static final Log log = LogFactory.getLog(ServicioRest.class);
 	private UsuarioModel daoUser = new UsuarioModel();
+	private ComprobanteModel daoCompro = new ComprobanteModel();
 
 	@GET
 	@Path("/usuario")
@@ -59,6 +62,46 @@ public class ServicioRest {
 	public Response elimina(@PathParam("id")int id) {
 		log.info("Elimina usuario " + id);
 		if (daoUser.eliminaUsuario(id) >0)
+			return Response.ok().build();
+		else
+			return Response.notModified().build();
+	}
+	
+	@GET
+	@Path("/comprobante")
+	public Response listarTodosComprobante() {
+		log.info("listarTodos rest ");
+		return Response.ok(daoCompro.listarTodos()).build();
+	}
+
+	@POST
+	@Path("/comprobante")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response registraComprobante(Comprobante obj) {
+		log.info("Registra comprobante " + obj.getIdcomprobante());
+		if (daoCompro.insertaComprobante(obj) >0)
+			return Response.ok().build();
+		else
+			return Response.notModified().build();
+	}
+	
+	@PUT
+	@Path("/comprobante")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response atualizaComprobante(Comprobante obj) {
+		log.info("Actualiza comprobante " + obj.getIdcomprobante());
+		if (daoCompro.actualizaComprobante(obj) >0)
+			return Response.ok().build();
+		else
+			return Response.notModified().build();
+	}
+
+	@DELETE
+	@Path("/comprobante/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response eliminaComprobante(@PathParam("id")int id) {
+		log.info("Elimina comprobante " + id);
+		if (daoCompro.eliminaComprobante(id) >0)
 			return Response.ok().build();
 		else
 			return Response.notModified().build();
